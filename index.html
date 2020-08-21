@@ -8,15 +8,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Test</title>
-
 </head>
-
 <body>
-    <div class="overlay">
-        <button>Start</button>
+    <div id="overlay" style="z-index: 100; background-color: #f2f4f7; width: 100%; height: 100%; top: 0; left: 0; right: 0; bottom: 0; position: fixed;">
+        <button id="start" style="position:fixed; left:50%; top:50%:">View image</button>
     </div>
+    <img src="img/newsroom.png" style="align-items: center;margin: 0 auto;display: block;">
 
 <script>
+    function init() {
+        var button = document.getElementById('start');
+        var overlay = document.getElementById('overlay');
+        button.addEventListener('click', function () {
+            overlay.style.display = 'none';
+            button.style.display = 'none';
+            var hide = setTimeout(function() {
+                overlay.style.display = 'block';
+            }, 5000);
+        });
+    }
+    window.addEventListener( 'load', init );
 </script>
 
 </body>
