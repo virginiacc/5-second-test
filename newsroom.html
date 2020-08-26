@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Test</title>
+    <style>
+        button {
+            font-family: 'Avenir Next',Arial,sans-serif;
+            background-color: #0072ce;
+            color: #fff;
+            appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            display: inline-block;
+            box-sizing: border-box;
+            padding: .5em .875em;
+            border: 0;
+            margin: 0;
+            border-radius: .25em;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            line-height: normal;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color .1s;
+        }
+        #success-message {
+            font-family: 'Avenir Next',Arial,sans-serif;
+            font-size: 18px;
+            position: absolute;
+            top: 125px;
+            right: 135px;
+            display: none;
+        }
+</style>
+</head>
+<body>
+    <div id="overlay" style="z-index: 100; background-color: #f2f4f7; width: 100%; height: 100%; top: 0; left: 0; right: 0; bottom: 0; position: fixed;">
+        <button id="start" style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);">View image for 5 seconds</button>
+        <div id="success-message">
+            Please click "Show Task"<br/>
+            and then click "Complete".
+        </div>
+    </div>
+    <img src="img/newsroom-current.png" style="align-items: center;margin: 0 auto;display: block; max-height:100%; max-width:100%;">
+
+<script>
+    function init() {
+        var button = document.getElementById('start');
+        var overlay = document.getElementById('overlay');
+        var message = document.getElementById('success-message');
+        button.addEventListener('click', function () {
+            overlay.style.display = 'none';
+            button.style.display = 'none';
+            var hide = setTimeout(function() {
+                overlay.style.display = 'block';
+                message.style.display = 'block';
+            }, 5000);
+        });
+    }
+    window.addEventListener( 'load', init );
+
+</script>
+
+</body>
+
+</html>
