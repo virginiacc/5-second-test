@@ -17,6 +17,14 @@ function shuffle( array ) {
   return array;
 }
 
+function getNumberArray( num ) {
+    var arr = [];
+    for ( var i = 0; i < num; i++ ){
+        arr.push( i );
+    }
+    return arr;
+}
+
 function hide( elem ) {
     elem.style.display = 'none';
 }
@@ -26,43 +34,41 @@ function show( elem ) {
 }
 
 function init() {
-    localStorage.setItem('test', 'test value');
-    console.log(localStorage.getItem('test'));
-    
     var overlay = document.getElementById( 'overlay' );
-    var taskInstructions = document.getElementById( 'task-instructions' );
-    var buttonInstructions = document.getElementById( 'button-instructions' );
     var button = document.getElementById( 'start' );
     var imageContainer = document.getElementById( 'images' );
     var images = imageContainer.querySelectorAll( 'img' );
-
-    var shuffledImages = shuffle( [].slice.call( images ) );
-
     var imageCount = images.length;
-    var counter = 0;
-
-    button.addEventListener( 'click', function() {
-        if ( counter < imageCount ) {
-            var currentImage = shuffledImages[ counter ];
+    var order = localStorage.getItem('imageOrder');
+    var currentIndex = 0;
+    if ( order ) {
+        order = JSON.parse( order );
+        currentIndex = localStorage.getItem('currentIndex');
+        currentIndex = parseInt( currentIndex );
+    } else {
+        var arr = getNumberArray( imageCount );
+        var order = shuffle( arr );
+        localStorage.setItem('imageOrder', JSON.stringify(order));
+    }
+    localStorage.setItem('currentIndex', currentIndex+1);
+    if ( currentIndex < imageCount ){
+        button.addEventListener( 'click', function() {
+            var idx = order[ currentIndex ];
+            var currentImage = images[ idx ];
             hide( overlay );
-            hide( taskInstructions );
-            hide( buttonInstructions );
             hide( button );
-            show( currentImage );
-            counter+=1;
-            var taskTimeout = setTimeout( function() {
+            show( currentImage ); 
+            setTimeout( function() {
+                overlay.style.display = 'block';
                 hide( currentImage );
                 show( overlay );
-                if ( counter < imageCount ) {
-                    show( taskInstructions );
-                    var buttonTimeout = setTimeout( function() {
-                        show( buttonInstructions );
-                        show( button );
-                    }, 20000 );
-                }
-            }, 10000 );
-        }
-    });
+            },  10000 );           
+        });
+    } else {
+        hide( button );
+        localStorage.setItem('imageOrder', '');
+        localStorage.setItem('currentIndex', '')
+    }
 }
 
 window.addEventListener( 'load', init );
