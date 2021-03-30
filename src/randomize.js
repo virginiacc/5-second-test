@@ -36,6 +36,7 @@ function show( elem ) {
 function init() {
     var overlay = document.getElementById( 'overlay' );
     var button = document.getElementById( 'start' );
+    var taskInstructions = document.getElementById( 'task-instructions' );
     var imageContainer = document.getElementById( 'images' );
     var images = imageContainer.querySelectorAll( 'img' );
     var imageCount = images.length;
@@ -51,6 +52,7 @@ function init() {
         localStorage.setItem('imageOrder', JSON.stringify(order));
     }
     localStorage.setItem('currentIndex', currentIndex+1);
+    console.log(currentIndex)
     if ( currentIndex < imageCount ){
         button.addEventListener( 'click', function() {
             var idx = order[ currentIndex ];
@@ -62,6 +64,7 @@ function init() {
                 overlay.style.display = 'block';
                 hide( currentImage );
                 show( overlay );
+                show( taskInstructions );
             },  10000 );           
         });
     } else {
