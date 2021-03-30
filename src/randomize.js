@@ -26,6 +26,9 @@ function show( elem ) {
 }
 
 function init() {
+    localStorage.setItem('test', 'test value');
+    console.log(localStorage.getItem('test'));
+    
     var overlay = document.getElementById( 'overlay' );
     var taskInstructions = document.getElementById( 'task-instructions' );
     var buttonInstructions = document.getElementById( 'button-instructions' );
