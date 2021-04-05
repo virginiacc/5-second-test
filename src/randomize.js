@@ -35,43 +35,38 @@ function show( elem ) {
 
 function init() {
     var overlay = document.getElementById( 'overlay' );
+    var pageNumber = parseInt( overlay.dataset.pageNumber );
     var button = document.getElementById( 'start' );
     var taskInstructions = document.getElementById( 'task-instructions' );
     var imageContainer = document.getElementById( 'images' );
     var images = imageContainer.querySelectorAll( 'img' );
     var imageCount = images.length;
     var order = localStorage.getItem('imageOrder');
-    var currentIndex = 0;
+    
     if ( order ) {
         order = JSON.parse( order );
-        currentIndex = localStorage.getItem('currentIndex');
-        currentIndex = parseInt( currentIndex );
     } else {
         var arr = getNumberArray( imageCount );
-        var order = shuffle( arr );
-        localStorage.setItem('imageOrder', JSON.stringify(order));
+        order = shuffle( arr );
+        localStorage.setItem('imageOrder', JSON.stringify( order ) );
     }
-    localStorage.setItem('currentIndex', currentIndex+1);
-    console.log(currentIndex)
-    if ( currentIndex < imageCount ){
-        button.addEventListener( 'click', function() {
-            var idx = order[ currentIndex ];
-            var currentImage = images[ idx ];
-            hide( overlay );
-            hide( button );
-            show( currentImage ); 
-            setTimeout( function() {
-                overlay.style.display = 'block';
-                hide( currentImage );
-                show( overlay );
-                show( taskInstructions );
-            },  10000 );           
-        });
-    } else {
+
+    console.log( order );
+
+    button.addEventListener( 'click', function() {
+        var idx = order[ pageNumber ];
+        var currentImage = images[ idx ];
+        hide( overlay );
         hide( button );
-        localStorage.setItem('imageOrder', '');
-        localStorage.setItem('currentIndex', '')
-    }
+        show( currentImage ); 
+        setTimeout( function() {
+            overlay.style.display = 'block';
+            hide( currentImage );
+            show( overlay );
+            show( taskInstructions );
+        },  10000 );           
+    });
+    
 }
 
 window.addEventListener( 'load', init );
